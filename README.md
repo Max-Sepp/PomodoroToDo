@@ -5,5 +5,5 @@ I am building it to learn how to build a fullstack web app.
 
 # Running
 If you wish to run it you can do so by building the react app with:
-npm run build
+`npm run build`
 These files will be hosted by django
