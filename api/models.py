@@ -10,7 +10,7 @@ def generate_code():
     while True:
         letters = string.ascii_letters + string.digits
         code = "".join(random.choice(letters) for i in range(10))
-        if Blog_Post_Storage.objects.filter(code=code).count() == 0:
+        if Todo.objects.filter(id=code).count() == 0:
             break
     return code
 
