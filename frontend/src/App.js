@@ -1,7 +1,9 @@
+import HomePage from "./components/HomePage/HomePage";
+
 function App() {
   return (
-    <div className="text-3xl font-bold underline">
-      Hello World!
+    <div className="bg-l-green min-h-screen w-screen">
+      <HomePage />
     </div>
   );
 }
