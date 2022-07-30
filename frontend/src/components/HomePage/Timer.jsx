@@ -1,13 +1,8 @@
-import React from 'react';
-import Countdown from 'react-countdown';
+import React, { useState } from 'react';
 
-const Completionist = () => <span>You finished good job on the work</span>;
-
-function Timer(props) {
+function Timer() {
     return (
-        <Countdown date={Date.now() + props.time}>
-            <Completionist />
-        </Countdown>
+        <h1>Hello</h1>
     )
 }
 
