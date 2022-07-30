@@ -9,7 +9,8 @@ module.exports = {
       'indigo': '#360568',
       'l-green': '#BFD7B5',
       'd-green': '#4B644A',
-      'white': '#F2E7C9'
+      'white': '#F2E7C9',
+      'transparent': 'transparent'
     },
     extend: {},
   },
