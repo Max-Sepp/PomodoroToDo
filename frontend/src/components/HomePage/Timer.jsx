@@ -43,22 +43,20 @@ function Timer() {
     if (seconds < 10) seconds = '0' + seconds;
 
     return (
-        <div className=''>
-            <div className='mx-auto w-fit pt-5'>
-                <CircularProgressbar
-                    value={percentage}
-                    text={minutes + ':' + seconds}
-                    styles={buildStyles({
-                        textColor: '#F9F0F6',
-                        pathColor: mode === 'work' ? '#360568' : '#4B644A',
-                        tailColor: '#F9F0F6',
-                    })}
-                />
-                {paused
-                    ? <IoPlayCircle className='mt-4 mx-auto' size={100} onClick={() => { setPaused(false); }} />
-                    : <IoPauseCircle className='mt-4 mx-auto' size={100} onClick={() => { setPaused(true); }} />}
-                <IoSettingsSharp className='mt-4 mx-auto pb-5' size={45} onClick={() => { settings.setSettings(false) }} />
-            </div>
+        <div className='mx-auto w-fit pt-5'>
+            <CircularProgressbar
+                value={percentage}
+                text={minutes + ':' + seconds}
+                styles={buildStyles({
+                    textColor: '#F9F0F6',
+                    pathColor: mode === 'work' ? '#360568' : '#4B644A',
+                    tailColor: '#F9F0F6',
+                })}
+            />
+            {paused
+                ? <IoPlayCircle className='mt-4 mx-auto' size={100} color='#090C09' onClick={() => { setPaused(false); }} />
+                : <IoPauseCircle className='mt-4 mx-auto' size={100} color='#090C09' onClick={() => { setPaused(true); }} />}
+            <IoSettingsSharp className='mt-4 mx-auto pb-5' size={45} color='#090C09' onClick={() => { settings.setSettings(false) }} />
         </div>
     )
 }

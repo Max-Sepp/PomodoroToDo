@@ -5,8 +5,8 @@ import Settings from './Settings';
 
 function HomePage() {
 
-    const [settings, setSettings] = useState(true);
-    const [workTime, setWorkTime] = useState(1);
+    const [settings, setSettings] = useState(false);
+    const [workTime, setWorkTime] = useState(25);
     const [breakTime, setBreakTime] = useState(5);
     return (
         <SettingsContext.Provider value={{
