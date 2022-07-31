@@ -10,7 +10,7 @@ function Settings() {
     const settings = useContext(SettingsContext)
 
     return (
-        <div className='mx-auto w-fit pt-5'>
+        <div className='mx-auto w-fit py-5'>
             <h3 className='text-indigo font-bold md:text-4xl text-3xl '>Work Timer: {settings.workTime}</h3>
             <Slider
                 className='my-5'
