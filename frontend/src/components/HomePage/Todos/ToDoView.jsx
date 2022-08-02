@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import TodoContext from './TodoContext';
+import { IoRefresh } from "react-icons/io5";
 
 import TodoCard from './TodoCard';
 
@@ -34,6 +35,7 @@ function ToDoView() {
             <ol>
                 {todoCards}
             </ol>
+            <IoRefresh onClick={getTodos} size={50} className="mx-auto p-2" />
         </>
     )
 }
