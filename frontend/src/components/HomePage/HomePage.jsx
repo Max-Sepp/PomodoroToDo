@@ -4,7 +4,7 @@ import ToDo from './Todos/ToDo';
 
 function HomePage() {
     return (
-        <div className='max-w-7xl grid lg:grid-cols-3 grid-cols-1'>
+        <div className='max-w-7xl grid lg:grid-cols-3 grid-cols-1 mx-auto'>
             <div><PomodoroTimer /></div>
             <div className='lg:col-span-2'><ToDo /></div>
         </div>
