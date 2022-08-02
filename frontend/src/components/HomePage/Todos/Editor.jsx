@@ -29,11 +29,20 @@ function Editor(props) {
     }
 
     const handleSubmit = (e) => {
+        const getTodos = async () => {
+            try {
+                const response = await axios.get('/api/todos');
+                Todo.setTodos(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
         e.preventDefault();
         axios.put('/api/todo/' + props.edit, inputs)
             .catch(function (error) {
                 console.log('error occured');
             });
+        getTodos();
         Todo.setEditor('todos');
     }
     return (
@@ -59,7 +68,7 @@ function Editor(props) {
                 />
             </label>
             <div className='flex flex-row'>
-                <input type="submit" className='bg-indigo rounded-lg p-2 text-white m-2' />
+                <input type="submit" className='bg-indigo rounded-lg p-2 text-white m-2'>Submit</input>
                 <button
                     className='bg-indigo rounded-lg p-2 text-white m-2'
                     onClick={(e) => { e.preventDefault(); Todo.setEditor('todos'); }}
