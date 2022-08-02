@@ -21,10 +21,13 @@ function ToDoView() {
 
     useEffect(() => {
         getTodos();
+    }, [])
+
+    useEffect(() => {
         setTodoCards(Todo.todos.map((TodoInfo) => <li key={TodoInfo.id}>
             <TodoCard getTodos={getTodos} id={TodoInfo.id} title={TodoInfo.title} body={TodoInfo.body} creator={TodoInfo.creator} completed={TodoInfo.completed} />
         </li>
-        ))
+        ));
     }, [Todo.todos])
 
     return (

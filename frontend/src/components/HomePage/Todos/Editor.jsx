@@ -5,6 +5,15 @@ import axios from 'axios';
 function Editor(props) {
     const Todo = useContext(TodoContext);
 
+    const getTodos = async () => {
+        try {
+            const response = await axios.get('/api/todos');
+            Todo.setTodos(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const [inputs, setInputs] = useState({
         "title": "",
         "body": ""
@@ -31,6 +40,9 @@ function Editor(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.put('/api/todo/' + props.edit, inputs)
+            .then((response) => {
+                getTodos();
+            })
             .catch(function (error) {
                 console.log('error occured');
             });

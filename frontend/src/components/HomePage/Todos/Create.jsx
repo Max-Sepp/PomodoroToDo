@@ -5,6 +5,15 @@ import axios from 'axios';
 function Create() {
     const Todo = useContext(TodoContext);
 
+    const getTodos = async () => {
+        try {
+            const response = await axios.get('/api/todos');
+            Todo.setTodos(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const [inputs, setInputs] = useState({
         "title": "",
         "body": "",
@@ -21,6 +30,9 @@ function Create() {
         if (inputs !== { "title": "", "body": "", "creator": "" }) {
             e.preventDefault();
             axios.post('/api/todos', inputs)
+                .then((response) => {
+                    getTodos();
+                })
                 .catch(function (error) {
                     console.log('error occured');
                 });
