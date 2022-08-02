@@ -1,12 +1,51 @@
-import React from 'react'
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
+import TodoContext from './TodoContext';
+import { IoPencil, IoTrash } from "react-icons/io5";
 
 function TodoCard(props) {
+    const Todo = useContext(TodoContext);
+
+    const [checked, setChecked] = useState(props.completed);
+
+    const completedChange = async () => {
+        setChecked(!checked);
+        try {
+            await axios.put('/api/todo/' + props.id, {
+                "title": props.title,
+                "body": props.body,
+                "creator": props.creator,
+                "completed": !checked
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const deleteTodo = async () => {
+        try {
+            await axios.delete('/api/todo/' + props.id);
+            props.getTodos();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => { }, [checked])
+
     return (
-        <li key={props.id} className='p-2 rounded-2xl bg-indigo text-white m-2'>
-            <h2 className='md:text-5xl text-3xl '>{props.title}</h2>
-            <p className='md:text-2xl text-xl'>{props.body}</p>
-            <footer className='md:text-base text-sm'>{props.creator}</footer>
-        </li>
+        <div className='group px-2 pb-2 rounded-2xl bg-indigo text-white mx-2 mb-2 flex gap-4 flex-row items-center'>
+            <input type="checkbox" checked={checked} onChange={completedChange} className='h-4 w-4' />
+            <div>
+                <div className="flex flex-row gap-2 items-center">
+                    <h2 className='md:text-5xl text-3xl'>{props.title}</h2>
+                    <IoPencil size={25} onClick={() => { Todo.setEditor(props.id) }} className="group-hover:visible invisible bg-[#1E033A] rounded-lg p-1" />
+                    <IoTrash size={25} onClick={deleteTodo} color="#FF0000" className="group-hover:visible invisible bg-[#1E033A] rounded-lg p-1" />
+                </div>
+                <p className='md:text-2xl text-xl'>{props.body}</p>
+                <footer className='md:text-base text-sm'>{props.creator}</footer>
+            </div>
+        </div>
     )
 }
 

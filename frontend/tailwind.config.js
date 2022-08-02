@@ -13,7 +13,9 @@ module.exports = {
       'transparent': 'transparent',
       'black': '#090C09'
     },
-    extend: {},
+    extend: {
+      visibility: ["group-hover"],
+    },
   },
   plugins: [],
 }

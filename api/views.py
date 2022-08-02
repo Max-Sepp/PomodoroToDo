@@ -15,6 +15,7 @@ def about(request):
     """
     apis = {
         "get_post_todos": "/todos",
+        "completed_or_not_todos": "/todos/<completed>",
         "get_put_delete_todo": "/todo/<id>",
     }
 
@@ -34,6 +35,13 @@ def Todos(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+def completed_or_not_todos(request, completed):
+    todos = models.Todo.objects.filter(completed=completed)
+    serializer = serializers.Todo_Serializer(todos, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(["GET", "PUT", "DELETE"])
