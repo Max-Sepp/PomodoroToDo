@@ -18,22 +18,12 @@ function Create() {
     }
 
     const handleSubmit = (e) => {
-        const getTodos = async () => {
-            try {
-                const response = await axios.get('/api/todos');
-                Todo.setTodos(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
         if (inputs !== { "title": "", "body": "", "creator": "" }) {
             e.preventDefault();
             axios.post('/api/todos', inputs)
                 .catch(function (error) {
                     console.log('error occured');
                 });
-            getTodos();
             Todo.setCreate('todos');
         }
     }
@@ -73,7 +63,7 @@ function Create() {
                     />
                 </label>
                 <div className='flex flex-row'>
-                    <input type="submit" className='bg-indigo rounded-lg p-2 text-white m-2'>Submit</input>
+                    <input type="submit" className='bg-indigo rounded-lg p-2 text-white m-2' />
                     <button
                         className='bg-indigo rounded-lg p-2 text-white m-2'
                         onClick={(e) => { e.preventDefault(); Todo.setCreate('todos'); }}
