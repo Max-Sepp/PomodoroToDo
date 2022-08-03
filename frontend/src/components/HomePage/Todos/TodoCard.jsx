@@ -43,7 +43,6 @@ function TodoCard(props) {
                     <IoTrash size={25} onClick={deleteTodo} color="#FF0000" className="group-hover:visible invisible bg-[#1E033A] rounded-lg p-1" />
                 </div>
                 <p className='md:text-2xl text-xl'>{props.body}</p>
-                <footer className='md:text-base text-sm'>{props.creator}</footer>
             </div>
         </div>
     )
