@@ -492,4 +492,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-/rest_client
+rest_client/
