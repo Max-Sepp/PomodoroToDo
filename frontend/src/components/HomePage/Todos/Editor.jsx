@@ -1,14 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
+import AxiosContext from '../../AxiosContext';
 import TodoContext from './TodoContext';
-import axios from 'axios';
+
 
 function Editor(props) {
+    const AxiosInstance = useContext(AxiosContext)
     const Todo = useContext(TodoContext);
 
     const getTodos = async () => {
         try {
-            const response = await axios.get('/api/todos');
-            Todo.setTodos(response.data);
+            await AxiosInstance.TokenInstance.get('/api/todos');
         } catch (error) {
             console.error(error);
         }
@@ -21,7 +22,7 @@ function Editor(props) {
 
     const getCurrentInfo = async () => {
         try {
-            const response = await axios.get('/api/todo/' + props.edit);
+            const response = await AxiosInstance.TokenInstance.get('/api/todo/' + props.edit);
             setInputs(response.data);
         } catch (error) {
             console.error(error);
@@ -39,7 +40,7 @@ function Editor(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put('/api/todo/' + props.edit, inputs)
+        AxiosInstance.TokenInstance.put('/api/todo/' + props.edit, inputs)
             .then((response) => {
                 getTodos();
             })

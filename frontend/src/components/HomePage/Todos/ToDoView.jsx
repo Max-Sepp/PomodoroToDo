@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import TodoContext from './TodoContext';
 import { IoRefresh } from "react-icons/io5";
 
 import TodoCard from './TodoCard';
+import AxiosContext from '../../AxiosContext';
 
 function ToDoView() {
     const Todo = useContext(TodoContext)
+    const AxiosInstance = useContext(AxiosContext)
 
     const [todoCards, setTodoCards] = useState()
 
     const getTodos = async () => {
         try {
-            const response = await axios.get('/api/todos');
+            const response = await AxiosInstance.TokenInstance.get('/api/todos');
             Todo.setTodos(response.data);
         } catch (error) {
             console.error(error);
@@ -20,8 +21,10 @@ function ToDoView() {
     }
 
     useEffect(() => {
-        getTodos();
-    }, [])
+        if (AxiosInstance.tokenAvailable) {
+            getTodos();
+        }
+    }, [AxiosInstance.tokenAvailable])
 
     useEffect(() => {
         setTodoCards(Todo.todos.map((TodoInfo) => <li key={TodoInfo.id}>

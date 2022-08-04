@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
+import AxiosContext from '../../AxiosContext';
 import TodoContext from './TodoContext';
-import axios from 'axios';
 
 function Create() {
+    const AxiosInstance = useContext(AxiosContext)
     const Todo = useContext(TodoContext);
 
     const getTodos = async () => {
         try {
-            const response = await axios.get('/api/todos');
+            const response = await AxiosInstance.TokenInstance.get('/api/todos');
             Todo.setTodos(response.data);
         } catch (error) {
             console.error(error);
@@ -29,7 +30,7 @@ function Create() {
     const handleSubmit = (e) => {
         if (inputs !== { "title": "", "body": "", "creator": "" }) {
             e.preventDefault();
-            axios.post('/api/todos', inputs)
+            AxiosInstance.TokenInstance.post('/api/create_todos', inputs)
                 .then((response) => {
                     getTodos();
                 })
@@ -60,16 +61,6 @@ function Create() {
                         type="text"
                         name="body"
                         value={inputs.body}
-                        onChange={handleChange}
-                        className=""
-                    />
-                </label>
-                <label className='m-2 flex flex-col'>
-                    <h3>Creator:</h3>
-                    <input
-                        type="text"
-                        name="creator"
-                        value={inputs.creator}
                         onChange={handleChange}
                         className=""
                     />

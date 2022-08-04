@@ -1,21 +1,20 @@
-import React, { useState, useContext } from 'react';
-import axios from 'axios';
-import { useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import TodoContext from './TodoContext';
 import { IoPencil, IoTrash } from "react-icons/io5";
+import AxiosContext from '../../AxiosContext';
 
 function TodoCard(props) {
     const Todo = useContext(TodoContext);
+    const AxiosInstance = useContext(AxiosContext)
 
     const [checked, setChecked] = useState(props.completed);
 
     const completedChange = async () => {
         setChecked(!checked);
         try {
-            await axios.put('/api/todo/' + props.id, {
+            await AxiosInstance.TokenInstance.put('/api/todo/' + props.id, {
                 "title": props.title,
                 "body": props.body,
-                "creator": props.creator,
                 "completed": !checked
             });
         } catch (error) {
@@ -25,7 +24,7 @@ function TodoCard(props) {
 
     const deleteTodo = async () => {
         try {
-            await axios.delete('/api/todo/' + props.id);
+            await AxiosInstance.TokenInstance.delete('/api/todo/' + props.id);
             props.getTodos();
         } catch (error) {
             console.error(error);
