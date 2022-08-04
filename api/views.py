@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -20,44 +19,31 @@ class LoginView(KnoxLoginView):
     authentication_classes = [BasicAuthentication]
 
 
-@api_view(["GET"])
-def about(request):
-    """
-    returns available rest APIs
-    """
-    apis = {
-        "get_post_todos": "/todos",
-        "completed_or_not_todos": "/todos/<completed>",
-        "get_put_delete_todo": "/todo/<id>",
-    }
-
-    return Response(apis)
-
-
-class Todos(generics.ListCreateAPIView):
+class Create_Todos(generics.CreateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     queryset = models.Todo.objects.all()
     serializer_class = serializers.Todo_Serializer
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
-class completed_or_not_todos(generics.ListAPIView):
+
+class Todos(generics.ListAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     serializer_class = serializers.Todo_Serializer
 
     def get_queryset(self):
-        """
-        This view should return either all completed tasks or unompleted tasks
-        """
-        completed = self.kwargs["completed"]
-        return models.Todo.objects.filter(completed=completed)
+        return models.Todo.objects.filter(owner=self.request.user)
 
 
 class todo_detail(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-    queryset = models.Todo.objects.all()
     serializer_class = serializers.Todo_Serializer
     lookup_field = "id"
     lookup_url_kwarg = "id"
+
+    def get_queryset(self):
+        return models.Todo.objects.filter(owner=self.request.user)

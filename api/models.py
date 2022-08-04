@@ -21,9 +21,11 @@ class Todo(models.Model):
     )
     title = models.CharField(max_length=50)
     body = models.CharField(max_length=250, default="")
-    creator = models.CharField(max_length=15)
     created = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
+    owner = models.ForeignKey(
+        "auth.User", related_name="todo", on_delete=models.CASCADE
+    )
 
     class Meta:
         ordering = ["-created"]
