@@ -10,3 +10,6 @@ These files will be hosted by django
 
 ### Security
 For this project to be secure you need to use HTTPS because unencrypted passwords are sent
+
+### Todo
+Determine what is causing two get requests and stop one of the requests since it is pointless
