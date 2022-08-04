@@ -7,21 +7,28 @@ function App() {
   const [token, setToken] = useState('')
   const [tokenAvailable, setTokenAvailable] = useState(false)
 
-  useEffect(() => {
-    axios.post('/api/login/').then(
-      (response) => {
-        setToken(response.data.token);
-        setTokenAvailable(true);
-      }
-    )
-
-  }, [])
-
   const TokenInstance = axios.create({
     headers: {
       'Authorization': 'Token ' + token
     }
   });
+
+  useEffect(() => {
+    axios.post('/api/login/').then(
+      (response) => {
+        setToken(response.data.token);
+        setTokenAvailable(true);
+        window.addEventListener("beforeunload", (e) => {
+          TokenInstance.post('/api/logout/', {}, {
+            headers: {
+              'Authorization': 'Token ' + response.data.token
+            }
+          })
+        }
+        )
+      });
+  }, [])
+
   return (
     <AxiosContext.Provider value={{
       TokenInstance,

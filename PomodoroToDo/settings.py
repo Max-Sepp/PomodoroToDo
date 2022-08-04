@@ -132,3 +132,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "frontend/build/static")]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }
+
+from datetime import timedelta
+
+REST_KNOX = {
+    "TOKEN_TTL": timedelta(minutes=20),
+    "AUTO_REFRESH": True,
+}
