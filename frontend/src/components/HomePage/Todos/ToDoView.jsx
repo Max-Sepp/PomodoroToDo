@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import TodoContext from './TodoContext';
 import { IoRefresh } from "react-icons/io5";
 
@@ -8,8 +8,6 @@ import AxiosContext from '../../AxiosContext';
 function ToDoView() {
     const Todo = useContext(TodoContext)
     const AxiosInstance = useContext(AxiosContext)
-
-    const [todoCards, setTodoCards] = useState()
 
     const getTodos = async () => {
         try {
@@ -26,17 +24,13 @@ function ToDoView() {
         }
     }, [AxiosInstance.tokenAvailable])
 
-    useEffect(() => {
-        setTodoCards(Todo.todos.map((TodoInfo) => <li key={TodoInfo.id}>
-            <TodoCard getTodos={getTodos} id={TodoInfo.id} title={TodoInfo.title} body={TodoInfo.body} creator={TodoInfo.creator} completed={TodoInfo.completed} />
-        </li>
-        ));
-    }, [Todo.todos])
-
     return (
         <>
             <ol>
-                {todoCards}
+                {Todo.todos.map((TodoInfo) => <li key={TodoInfo.id}>
+                    <TodoCard getTodos={getTodos} id={TodoInfo.id} title={TodoInfo.title} body={TodoInfo.body} creator={TodoInfo.creator} completed={TodoInfo.completed} />
+                </li>
+                )}
             </ol>
             <IoRefresh onClick={getTodos} size={50} className="mx-auto p-2" />
         </>
